@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import RandomSingleFlow as randomsfp
 #################################################################################################
 # Funktion zur Erstellung eines Hillshades basierend auf einem digitalen Höhenmodell
+# Ein Test zum neuen Branch
 def hillshade(array, azimuth, angle_altitude):
     """Creates a shaded relief file from a DEM."""
     from numpy import gradient, pi, arctan, arctan2, sin, cos, sqrt
