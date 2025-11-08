@@ -37,9 +37,32 @@ def hillshade(array, azimuth, angle_altitude):
         + cos(altituderad) * cos(slope) * cos(azimuthrad - aspect)
     )
     return 255 * (shaded + 1) / 2
+#################################################################################################
+# Funktion zum Testen ob unterschiedliche Dezimaltrennzeichen in den Rasterdaten vorliegen
+def needs_preprocessing(file_path):
+    """Check if the file contains commas as decimal separators."""
+    with open(file_path, "r", encoding="utf-8") as f:
+        for line in f:
+            if ',' in line:
+                return True
+    return False
+#################################################################################################
+# Funktion zur Adaptierung unterschiedlicher Dezimaltrennzeichen in den Rasterdaten
+def preprocess_raster(file_path):
+    """Preprocess raster file to replace commas with periods in numeric values."""
+    if not needs_preprocessing(file_path):
+        return file_path  # Return the original file if no preprocessing is needed
+
+    temp_file = file_path.with_suffix(".tmp.asc")  # Create a temporary file
+    with open(file_path, "r", encoding="utf-8") as f_in, open(temp_file, "w", encoding="utf-8") as f_out:
+        for line in f_in:
+            # Replace commas with periods in numeric values
+            f_out.write(line.replace(",", "."))
+    return temp_file
+
 
 #################################################################################################
-# Funktion zur Adaptierung unterschiedlicher Dezimaltrennzeichen
+# Funktion zur Adaptierung unterschiedlicher Dezimaltrennzeichen für Eingabewerte
 def parse_decimal(input_string):
     # Prüfen, ob ein Komma als Dezimaltrennzeichen verwendet wird
     if ',' in input_string and '.' not in input_string:
@@ -86,10 +109,11 @@ if __name__ == "__main__":
         coefficient = parse_decimal(str(input_data["coefficient"]))
 
         # Open the DEM file
-        dataset = rasterio.open(dem_file)
+        # Preprocess the DEM file if necessary
+        processed_dem_file = preprocess_raster(dem_file)
+        dataset = rasterio.open(processed_dem_file)
         band = dataset.read(1)
         gridsize = dataset.res[0]
-
         # Initialize variables
         simarea = volume ** (2 / 3) * coefficient
         perimeter = simarea / gridsize**2
@@ -216,7 +240,9 @@ if __name__ == "__main__":
         # Save the plot
         output_plot_path = output_dir / f"{eventname}_deposition.png"
         fig.savefig(output_plot_path, dpi=300, bbox_inches="tight")
-
+        # Clean up the temporary file if preprocessing was done
+        if processed_dem_file != dem_file:
+            processed_dem_file.unlink()  # Deletes the temporary file
         fin = "finished"
 
     except Exception as e:
