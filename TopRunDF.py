@@ -9,6 +9,7 @@ from pathlib import Path  # For cross-platform path handling
 import matplotlib.pyplot as plt
 import RandomSingleFlow as randomsfp
 import argparse
+import mmap
 from scipy.ndimage import convolve
 
 import matplotlib as mpl
@@ -42,24 +43,29 @@ def hillshade(array, azimuth, angle_altitude):
 def needs_preprocessing(file_path):
     """Check if the file contains commas as decimal separators."""
     with open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            if ',' in line:
-                return True
-    return False
+        with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mm:
+            return b',' in mm
 #################################################################################################
 # Funktion zur Adaptierung unterschiedlicher Dezimaltrennzeichen in den Rasterdaten
 def preprocess_raster(file_path):
-    """Preprocess raster file to replace commas with periods in numeric values."""
     if not needs_preprocessing(file_path):
         return file_path  # Return the original file if no preprocessing is needed
+    """Preprocess raster file to replace commas with periods in numeric values."""
+    temp_file = file_path.with_suffix(".asc")  # Create a temporary file
 
-    temp_file = file_path.with_suffix(".tmp.asc")  # Create a temporary file
-    with open(file_path, "r", encoding="utf-8") as f_in, open(temp_file, "w", encoding="utf-8") as f_out:
-        for line in f_in:
-            # Replace commas with periods in numeric values
-            f_out.write(line.replace(",", "."))
+    with open(file_path, "r+", encoding="utf-8") as f_in:
+        # Map the file into memory
+        with mmap.mmap(f_in.fileno(), length=0, access=mmap.ACCESS_READ) as mm:
+            # Read the entire file content
+            content = mm.read().decode("utf-8")
+            # Replace commas with periods
+            updated_content = content.replace(",", ".")
+
+    # Write the updated content to a temporary file
+    with open(temp_file, "w", encoding="utf-8") as f_out:
+        f_out.write(updated_content)
+
     return temp_file
-
 
 #################################################################################################
 # Funktion zur Adaptierung unterschiedlicher Dezimaltrennzeichen für Eingabewerte
