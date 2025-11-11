@@ -21,8 +21,7 @@ class HillshadePlotter:
             sin(altituderad) * sin(slope)
             + cos(altituderad) * cos(slope) * cos(azimuthrad - aspect)
         )
-         # Normalize to [0, 1]
-        return (shaded + 1) / 2
+        return 255 * (shaded + 1) / 2
 
     def plot(self, depo_path, dem_path, eventname, outdir):
         """
@@ -51,8 +50,8 @@ class HillshadePlotter:
         depo_array = np.ma.masked_where(depo_array < 0.005, depo_array)
 
         # Plot the results
-        cmap = plt.cm.OrRd
-        cmap.set_bad(color="white")  # Set color for masked values
+        cmap = plt.cm.viridis  
+        #cmap.set_bad(color="white")  # Set color for masked values
         fig, ax = plt.subplots(figsize=(4.27, 3.2))
         ax.set_title(f"Deposition - {eventname}")
         dem_extent = [
@@ -62,9 +61,9 @@ class HillshadePlotter:
             dem_yll + dem_rows * dem_cs,
         ]
         # Plot hillshade
-        ax.imshow(hs_array, extent=dem_extent, cmap="Greys", alpha=1.0)
+        ax.imshow(hs_array, extent=dem_extent, cmap="Greys")
         # Overlay deposition data
-        img_plot = ax.imshow(depo_array, extent=dem_extent, cmap=cmap, alpha=0.7)
+        img_plot = ax.imshow(depo_array, extent=dem_extent, cmap=cmap)
         # Add colorbar
         cbar = plt.colorbar(img_plot, orientation="vertical", aspect=14)
         cbar.set_label("Deposition heights [m]")
