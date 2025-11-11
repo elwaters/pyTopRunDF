@@ -11,7 +11,7 @@ import RandomSingleFlow as randomsfp
 import argparse
 import mmap
 from scipy.ndimage import convolve
-
+from PlotResult import HillshadePlotter
 import matplotlib as mpl
 
 # Set global font size for plots
@@ -21,23 +21,7 @@ mpl.rcParams['axes.labelsize'] = 8  # Set axis label font size
 mpl.rcParams['xtick.labelsize'] = 8  # Set x-axis tick font size
 mpl.rcParams['ytick.labelsize'] = 8  # Set y-axis tick font size
 
-#################################################################################################
-# Funktion zur Erstellung eines Hillshades basierend auf einem digitalen Höhenmodell
-def hillshade(array, azimuth, angle_altitude):
-    """Creates a shaded relief file from a DEM."""
-    from numpy import gradient, pi, arctan, arctan2, sin, cos, sqrt
 
-    x, y = gradient(array)
-    slope = pi / 2.0 - arctan(sqrt(x * x + y * y))
-    aspect = arctan2(-x, y)
-    azimuthrad = azimuth * pi / 180.0
-    altituderad = angle_altitude * pi / 180.0
-
-    shaded = (
-        sin(altituderad) * sin(slope)
-        + cos(altituderad) * cos(slope) * cos(azimuthrad - aspect)
-    )
-    return 255 * (shaded + 1) / 2
 #################################################################################################
 # Funktion zum Testen ob unterschiedliche Dezimaltrennzeichen in den Rasterdaten vorliegen
 def needs_preprocessing(file_path):
@@ -206,46 +190,6 @@ if __name__ == "__main__":
         output_raster_path = output_dir / "depo.asc"
         with rasterio.open(output_raster_path, "w", **out_meta) as dest:
             dest.write(band4, 1)
-
-        # Plot the results
-         # Read and process the output raster
-            with open(output_raster_path, "r") as prism_f:
-                prism_header = prism_f.readlines()[:6]
-
-            prism_header = [item.strip().split()[-1] for item in prism_header]
-            prism_cols = int(prism_header[0])
-            prism_rows = int(prism_header[1])
-            prism_xll = float(prism_header[2])
-            prism_yll = float(prism_header[3])
-            prism_cs = float(prism_header[4])
-            prism_nodata = float(prism_header[5])
-
-            prism_array = np.loadtxt(output_raster_path, dtype=np.float64, skiprows=6)
-            a = np.ma.masked_where(prism_array < 0.005, prism_array)
-            prism_array[prism_array == prism_nodata] = np.nan
-             # Generate the hillshade for visualization
-            hs_array = hillshade(band, azimuth=34, angle_altitude=45)
-            # Plot the results
-            cmap = plt.cm.OrRd
-            cmap.set_bad(color="white")
-            fig, ax = plt.subplots(figsize=(4.27, 3.2))
-            ax.set_title(f"Deposition - {eventname}")
-            prism_extent = [
-                prism_xll,
-                prism_xll + prism_cols * prism_cs,
-                prism_yll,
-                prism_yll + prism_rows * prism_cs,
-            ]
-            img_plot = ax.imshow(hs_array, extent=prism_extent, cmap="Greys")
-            img_plot = ax.imshow(a, extent=prism_extent)
-            cbar = plt.colorbar(img_plot, orientation="vertical", aspect=14)
-            cbar.set_label("Deposition heights [m]")
-            fin = "finished"
-            #plt.show()
-
-        # Save the plot
-        output_plot_path = output_dir / f"{eventname}_deposition.png"
-        fig.savefig(output_plot_path, dpi=300, bbox_inches="tight")
         # Clean up the temporary file if preprocessing was done
         if processed_dem_file != dem_file:
             processed_dem_file.unlink()  # Deletes the temporary file
@@ -259,3 +203,8 @@ if __name__ == "__main__":
         if fin is None:
             fin = "terminated"
         print("Simulation", fin)
+        # Create an instance of the HillshadePlotter class
+plotter = HillshadePlotter()
+
+# Generate the plot
+plotter.plot(output_raster_path, dem_file, eventname, output_dir)
