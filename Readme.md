@@ -18,9 +18,11 @@ Iverson et al. (1998) suggest geometric similarity between $B$ and $\overline{h}
 Thus the potential deposition area $B$ can be estimated based on the event volume $V$ and $k_B$, a coefficient which represents an average mobility of the mass
 movement containing some information on the flow properties during depositional phase.  
 
-**$B=k_BV^{2/3}$**  
+$B=k_BV^{2/3}$  
 
-
+<div style="display: flex; justify-content: center;">
+    <img src="docs/mobility coefficient.png" alt="alt text" width="400">
+</div>
 
 
 ## Features
