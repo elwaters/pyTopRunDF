@@ -1,5 +1,6 @@
 # pyTopRunDF
 
+## Background
 A two dimensional runout simulation tool for debris flows to predict inundation areas on torrential fans.
 Calculations are based on a semi-empirical runout prediction model for volcanic mudflows (lahars) as proposed by
 [Iverson et al. (1998).](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2)  
@@ -20,9 +21,20 @@ movement containing some information on the flow properties during depositional 
 
 $B=k_BV^{2/3}$  
 
-<div style="display: flex; justify-content: center;">
-    <img src="docs/mobility coefficient.png" alt="alt text" width="400">
-</div>
+### Mobility Coefficient $k_B$
+
+| Study                     | Process Type           | $k_B$ |
+|---------------------------|------------------------|-------|
+| [Crosta (2003)](https://doi.org/10.5194/nhess-3-407-2003)             | Granular debris flows | 6     |
+| [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                     | Granular debris flows (IT) | 18    |
+| [Griswold (2004)](https://doi.org/10.3133/sir20075276)           | Debris flows          | 19    |
+| [Berti (2007)](https://doi.org/10.1016/j.geomorph.2007.01.014)              | Debris flows          | 30    |
+|  [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                    | Debris flows (CH)         | 32    |
+|  [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                    | Debris flows  (AUT)        | 45    |
+| [Capra (2002)](https://doi.org/10.1016/S0377-0273(01)00252-9)              | Earth slides          | 51    |
+|  [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                   | Debris floods (AUT)     | 57    |
+| [Waythomas (2000)](https://doi.org/10.1016/S0377-0273(00)00202-X)          | Volcanic earth flows  | 92    |
+| [Iverson et al. (1998).](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2)             | Lahars                | 200   |
 
 
 ## Features
