@@ -3,8 +3,13 @@
 A two dimensional runout simulation tool for debris flows to predict inundation areas on torrential fans.
 Calculations are based on a semi-empirical runout prediction model for volcanic mudflows (lahars) as proposed by
 [Iverson et al. (1998)](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2)
-They determined power-law relationships between the planimetric area of the deposits (B) and the deposit volume (V) by assuming geometric similarity:
-$V=B\overline{h}$
+They determined power-law relationships between the planimetric area of the deposits (B) and the deposit volume (V) by assuming geometric similarity:  
+$V=B\overline{h}$  
+with $B$ the deposited area and $\overline{h}$ the average deposition height.  
+Iverson et al. (1998) suggest geometric similarity between $B$ and $\overline{h}$ by assuming a constant ratio $\epsilon$ which yields:  
+$\overline{h}=B^{1/2}\epsilon=VB^{-1}$  
+$B=\epsilon^{-2/3}V^{2/3}$  
+$B=k_BV^{2/3}$  
 
 
 ## Features
