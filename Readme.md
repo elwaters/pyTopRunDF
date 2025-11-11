@@ -8,12 +8,12 @@ $V=B\overline{h}$
 with $B$ the deposited area and $\overline{h}$ the average deposition height.  
 
 Iverson et al. (1998) suggest geometric similarity between $B$ and $\overline{h}$ by assuming a constant ratio $\epsilon$ which yields to:  
-<center> 
+
 $\overline{h}=B^{1/2}\epsilon$  
 $B^{1/2}\epsilon=VB^{-1}$  
 $B=\epsilon^{-2/3}V^{2/3}$  
 $B=k_BV^{2/3}$  
-</center>
+
 
 ## Features
 
