@@ -11,12 +11,14 @@ with $B$ the deposited area and $\overline{h}$ the average deposition height.
 
 Iverson et al. (1998) suggest geometric similarity between $B$ and $\overline{h}$ by assuming a constant ratio $\epsilon$ which yields to:  
 
-<img src="docs/geometric similarity.png" alt="alt text" width="300" height="200">
+<div style="display: flex; justify-content: center;">
+    <img src="docs/geometric similarity.png" alt="alt text" width="300">
+
 
 $\overline{h}=B^{1/2}\epsilon$  
 $B^{1/2}\epsilon=VB^{-1}$  
 $B=\epsilon^{-2/3}V^{2/3}$ 
-
+</div>
 Thus the potential deposition area $B$ can be estimated based on the event volume $V$ and $k_B$, a coefficient which represents an average mobility of the mass
 movement containing some information on the flow properties during depositional phase.  
 
