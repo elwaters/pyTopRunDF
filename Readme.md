@@ -21,7 +21,7 @@ movement containing some information on the flow properties during depositional 
 
 $B=k_BV^{2/3}$  
 
-### Mobility Coefficient $k_B$
+### Range of mobility coefficients $k_B$ of alpine mass movements
 
 | Study                     | Process Type           | $k_B$ |
 |---------------------------|------------------------|-------|
