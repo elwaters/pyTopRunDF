@@ -30,20 +30,22 @@ def needs_preprocessing(file_path):
         with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mm:
             return b',' in mm
 #################################################################################################
-# Funktion zur Adaptierung unterschiedlicher Dezimaltrennzeichen in den Rasterdaten
 def preprocess_raster(file_path):
+    """Preprocess raster file to replace commas with periods in numeric values."""
     if not needs_preprocessing(file_path):
         return file_path  # Return the original file if no preprocessing is needed
-    """Preprocess raster file to replace commas with periods in numeric values."""
+
     temp_file = file_path.with_suffix(".asc")  # Create a temporary file
 
-    with open(file_path, "r+", encoding="utf-8") as f_in:
+    with open(file_path, "r", encoding="utf-8") as f_in:
         # Map the file into memory
         with mmap.mmap(f_in.fileno(), length=0, access=mmap.ACCESS_READ) as mm:
             # Read the entire file content
             content = mm.read().decode("utf-8")
             # Replace commas with periods
             updated_content = content.replace(",", ".")
+            # Ensure no extra newlines are introduced
+            updated_content = "\n".join(line.strip() for line in updated_content.splitlines())
 
     # Write the updated content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f_out:

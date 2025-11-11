@@ -21,17 +21,12 @@ class HillshadePlotter:
             sin(altituderad) * sin(slope)
             + cos(altituderad) * cos(slope) * cos(azimuthrad - aspect)
         )
-        return 255 * (shaded + 1) / 2
+         # Normalize to [0, 1]
+        return (shaded + 1) / 2
 
     def plot(self, depo_path, dem_path, eventname, outdir):
         """
         Plots the deposition result on the hillshade based on the DEM.
-
-        Parameters:
-        - depo_path: Path to the deposition raster file.
-        - dem_path: Path to the digital elevation model (DEM) raster file.
-        - eventname: Title of the plot.
-        - outdir: Directory to save the output plot.
         """
         # Read DEM and deposition data
         with open(dem_path, "r") as dem_f:
@@ -57,7 +52,7 @@ class HillshadePlotter:
 
         # Plot the results
         cmap = plt.cm.OrRd
-        cmap.set_bad(color="white")
+        cmap.set_bad(color="white")  # Set color for masked values
         fig, ax = plt.subplots(figsize=(4.27, 3.2))
         ax.set_title(f"Deposition - {eventname}")
         dem_extent = [
@@ -66,11 +61,13 @@ class HillshadePlotter:
             dem_yll,
             dem_yll + dem_rows * dem_cs,
         ]
-        img_plot = ax.imshow(hs_array, extent=dem_extent, cmap="Greys")
+        # Plot hillshade
+        ax.imshow(hs_array, extent=dem_extent, cmap="Greys", alpha=1.0)
+        # Overlay deposition data
         img_plot = ax.imshow(depo_array, extent=dem_extent, cmap=cmap, alpha=0.7)
+        # Add colorbar
         cbar = plt.colorbar(img_plot, orientation="vertical", aspect=14)
         cbar.set_label("Deposition heights [m]")
-        plt.show()
         # Save the plot
         outdir = Path(outdir)
         outdir.mkdir(parents=True, exist_ok=True)
