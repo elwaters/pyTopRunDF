@@ -1,6 +1,10 @@
 # pyTopRunDF
 
 A two dimensional runout simulation tool for debris flows to predict inundation areas on torrential fans.
+Calculations are based on a semi-empirical runout prediction model for volcanic mudflows (lahars) as proposed by
+[Iverson et al. (1998)](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2)
+They determined power-law relationships between the planimetric area of the deposits (B) and the deposit volume (V) by assuming geometric similarity:
+$V=B\overline{h}$
 
 
 ## Features
