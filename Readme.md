@@ -39,8 +39,10 @@ $B=k_BV^{2/3}$
 
 ## Features
 
--   Model potential 2D debris-flow deposition (heights) based on a given event volume and a mobility coefficient.
+-   Model potential 2D debris-flow deposition (heights) based on a given event volume and one parameter ($k_B$).
+-   Fast calculation.
 -   Accounts for the fan topography.
+-   Designed for preliminary hazard zoning.
 
 ## Instructions
 
