@@ -116,12 +116,13 @@ if __name__ == "__main__":
         area = 0
         mcsmax = 500
 
-        # Monte Carlo simulation
+        # Flowpath simulation
         for x in range(0, 100000):
             if area >= perimeter:
                 break
             else:
-                random_radius = 3  # Define the radius for random starting points
+                # In order to avoid implausible deposition heights due to an identical starting point, each starting point of a single flow run is determined randomly within a certain radius. 
+                random_radius = 3  # Define the radius for random starting points to be defined; Default: 3 gridsizes.
                 row = np.random.randint(max(0, row - random_radius), min(dataset.height, row + random_radius))
                 col = np.random.randint(max(0, col - random_radius), min(dataset.width, col + random_radius))
                 position = [row, col]
@@ -136,7 +137,8 @@ if __name__ == "__main__":
                         if area >= perimeter:
                             break
                         else:
-                            # Adjust artificial height dynamically
+                            # Adjust energy height dynamically
+                            # The energy height is a constant input value. It is assumed that it decreases with distance. 
                             distance = np.sqrt((position[0] - row)**2 + (position[1] - col)**2)
                             decay_factor = np.exp(-distance / 100)
                             if isinstance(artificial_height, float):
