@@ -171,8 +171,14 @@ if __name__ == "__main__":
         diff = volume / (dummy * gridsize**2)
         meannew = meanh * diff
         band4 = band3 * meannew
-
-        # Apply diffusion smoothing
+        #############################################################################################
+        # Mehrere Strategien um das Eingangsvolumen auf die Ablagerungsfläche plausibel zu verteilen:
+        #############################################################################################
+        # Diffusionsalgorithmus:
+        # Ein Diffusionsalgorithmus ist eine Methode, die verwendet wird, um Werte in einem Raster oder einer Matrix 
+        # zu glätten und gleichmäßiger zu verteilen. Er simuliert den physikalischen Prozess der Diffusion, 
+        # bei dem sich Material oder Energie von Bereichen mit hoher Konzentration zu Bereichen mit niedriger 
+        # Konzentration bewegt.
         kernel = np.array([[0.05, 0.1, 0.05],
                            [0.1, 0.4, 0.1],
                            [0.05, 0.1, 0.05]])
