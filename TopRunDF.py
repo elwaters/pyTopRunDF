@@ -183,7 +183,14 @@ if __name__ == "__main__":
                            [0.1, 0.4, 0.1],
                            [0.05, 0.1, 0.05]])
         band4 = convolve(band4, kernel, mode='constant', cval=0.0)
-
+         #############################################################################################
+        # Apply Gaussian smoothing to reduce sharp peaks
+        #from scipy.ndimage import gaussian_filter
+        #band4 = gaussian_filter(band4, sigma=2)
+        #############################################################################################
+        # Ablagerungshöhe über mittlere Ablagerungshöhe normiert:
+        #band4 = band4 / np.max(band4) * meanh
+        
         # Adjust deposition values to match input volume
         total_deposited_volume = np.sum(band4) * gridsize**2
         volume_difference = volume - total_deposited_volume
