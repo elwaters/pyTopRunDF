@@ -137,10 +137,13 @@ if __name__ == "__main__":
                         if area >= perimeter:
                             break
                         else:
-                            # Adjust energy height dynamically
-                            # The energy height is a constant input value. It is assumed that it decreases with distance. 
+                            # Adjust energy height dynamically to avoid unplausible depo-heights at the start cell.
+                            # The denominator in the exponent of the decay_factor (default: 100) scales the "range" of the 
+                            # decay. A larger denominator results in slower decay, meaning the decay factor remains 
+                            # significant over longer distances. A smaller denominator causes faster decay, meaning 
+                            # the decay factor approaches zero more quickly.
                             distance = np.sqrt((position[0] - row)**2 + (position[1] - col)**2)
-                            decay_factor = np.exp(-distance / 100)
+                            decay_factor = np.exp(-distance / 100)  # Example decay factor with denominantor=100
                             if isinstance(artificial_height, float):
                                 temp_height = artificial_height * gridsize * decay_factor
                             else:
@@ -172,23 +175,23 @@ if __name__ == "__main__":
         meannew = meanh * diff
         band4 = band3 * meannew
         #############################################################################################
-        # Mehrere Strategien um das Eingangsvolumen auf die Ablagerungsfläche plausibel zu verteilen:
+        # Several strategies for distributing the input volume plausibly across the storage area:
         #############################################################################################
-        # Diffusionsalgorithmus:
-        # Ein Diffusionsalgorithmus ist eine Methode, die verwendet wird, um Werte in einem Raster oder einer Matrix 
-        # zu glätten und gleichmäßiger zu verteilen. Er simuliert den physikalischen Prozess der Diffusion, 
-        # bei dem sich Material oder Energie von Bereichen mit hoher Konzentration zu Bereichen mit niedriger 
-        # Konzentration bewegt.
+        # --A-- # Diffusion algorithm:
+        # A diffusion algorithm is a method used to smooth values in a grid or matrix 
+        # and distribute them more evenly. It simulates the physical process of diffusion, 
+        # in which material or energy moves from areas of high concentration to areas of low 
+        # concentration.
         kernel = np.array([[0.05, 0.1, 0.05],
                            [0.1, 0.4, 0.1],
                            [0.05, 0.1, 0.05]])
         band4 = convolve(band4, kernel, mode='constant', cval=0.0)
          #############################################################################################
-        # Apply Gaussian smoothing to reduce sharp peaks
+        # --B-- # Apply Gaussian smoothing to reduce sharp peaks
         #from scipy.ndimage import gaussian_filter
         #band4 = gaussian_filter(band4, sigma=2)
         #############################################################################################
-        # Ablagerungshöhe über mittlere Ablagerungshöhe normiert:
+        # --C-- # Ablagerungshöhe über mittlere Ablagerungshöhe normiert:
         #band4 = band4 / np.max(band4) * meanh
         
         # Adjust deposition values to match input volume
