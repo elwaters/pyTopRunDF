@@ -1,6 +1,7 @@
 # Instruction
-
-## Preprocessing
+The user can define various scenarios that are simulated one after the other. These can be either individual events per scenario or scenarios of the same event for sensitivity analysis of the input parameters.  
+However each scenario needs to be defined in the folder Scenarios/Scenario<#>
+## Preprocessing for each scenario
 
 Before starting a simulation with pyTopRunDF the following steps and procedures have to be accomplished and considered by the user. The main input parameters are:
 
@@ -45,3 +46,7 @@ To convert a geotif into an ascii grid you can use the [geotiff2ascii](../helper
 ``` bash
 python .\helper\geotiff2ascii.py your_input.tif ./DEM/topofan.asc
 ```
+## Postprocessing for each scenario
+There are currently no postprocessing tools. The program writes an output for each scenario.  
+This consists of the simulated deposition heights and a map of these.  
+The results can be found after simulation of each scenario in Outputs/Scenario<#>
