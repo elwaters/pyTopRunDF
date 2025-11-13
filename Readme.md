@@ -100,22 +100,33 @@ pip install -r requirements.txt
 Run the main script:
 
 ``` bash
-python TopRunDF.py
+python batch_process.py
 ```
 
 ### Step 5: View the Results
 
-The script will generate output files (e.g., depo.asc) and display a plot of the results. Check the output directory for the generated files.
+The script will generate output files (e.g., depo.asc) and display a plot of the result for each input scenario. Check the output directory for the generated files.
 
 Project Structure:
 
 ```         
 pyTopRunDF/
+├── batch_process.py:     Start script.
 ├── TopRunDF.py:          Main script for the simulation.
-├── input.json:            Input data file.
-├── DEM/
-│   ├── topofan.asc:      Input digital terrain model (DTM).
-│   └── depo.asc:         Output deposition raster.
+├── Scenarios/
+│   ├── Scenario1/        Input scenarios
+│   │   ├── topofan.asc:      Input digital terrain model (DTM) of scenario1.
+│   │   └── input.json:       Input data file of scenario1.
+│   ├── Scenario2/
+│   │   ├── topofan.asc:      Input digital terrain model (DTM) of scenario2.
+│   │   └── input.json:       Input data file of scenario2.
+│   ├── Scenario.../
+├── Outputs/
+│   ├── Scenario1/
+│   │   ├── depo.asc:         Output deposition raster of sceanrio1.
+│   │   └── <eventname>_deposition.png:  Resultplot of scenario1.
+│   ├── Scenario.../ 
 ├── RandomSingleFlow.py:  External Python file for random walk logic.
+├── PlotResult.py:  External Python file for plot logic.
 └── requirements.txt:     Python dependencies.
 ```
