@@ -111,22 +111,22 @@ Project Structure:
 
 ```         
 pyTopRunDF/
-├── batch_process.py:     Start script.
-├── TopRunDF.py:          Main script for the simulation.
+├── batch_selected_process.py:      Start script.
+├── TopRunDF.py:                    Main script for the simulation.
 ├── Scenarios/
-│   ├── Scenario1/        Input scenarios
-│   │   ├── topofan.asc:      Input digital terrain model (DTM) of scenario1.
-│   │   └── input.json:       Input data file of scenario1.
-│   ├── Scenario2/
-│   │   ├── topofan.asc:      Input digital terrain model (DTM) of scenario2.
-│   │   └── input.json:       Input data file of scenario2.
+│   ├── Scenario_1/                 Input scenarios
+│   │   ├── topofan.asc:            Input digital terrain model (DTM) of scenario1.
+│   │   └── input.json:             Input data file of scenario1.
+│   ├── Scenario_2/
+│   │   ├── topofan.asc:            Input digital terrain model (DTM) of scenario2.
+│   │   └── input.json:             Input data file of scenario2.
 │   ├── Scenario.../
 ├── Outputs/
-│   ├── Scenario1/
-│   │   ├── depo.asc:         Output deposition raster of sceanrio1.
+│   ├── Scenario_1/
+│   │   ├── depo.asc:               Output deposition raster of sceanrio1.
 │   │   └── <eventname>_deposition.png:  Resultplot of scenario1.
 │   ├── Scenario.../ 
-├── RandomSingleFlow.py:  External Python file for random walk logic.
-├── PlotResult.py:  External Python file for plot logic.
-└── requirements.txt:     Python dependencies.
+├── RandomSingleFlow.py:            External Python file for random walk logic.
+├── PlotResult.py:                  External Python file for plot logic.
+└── requirements.txt:               Python dependencies.
 ```
