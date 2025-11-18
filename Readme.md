@@ -100,7 +100,7 @@ pip install -r requirements.txt
 Run the main script:
 
 ``` bash
-python batch_process.py
+python batch_select_process.py
 ```
 
 ### Step 5: View the Results
