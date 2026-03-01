@@ -128,9 +128,3 @@ pyTopRunDF/
 ├── PlotResult.py:                  External Python file for plot logic.
 └── requirements.txt:               Python dependencies.
 ``` 
-
-## Citation
-
-If you use pyTopRunDF in academic or technical work, please cite:
-
-- Iverson, R. M., Schilling, S. P., & Vallance, J. W. (1998). *Objective delineation of lahar-inundation hazard zones*. Geological Society of America Bulletin, 110(8), 972–984. https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2
