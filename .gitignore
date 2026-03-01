@@ -1,4 +1,3 @@
-pytoprundf/
 # macOS
 .DS_Store
 
@@ -10,6 +9,3 @@ __pycache__/
 pytoprundf/
 .venv/
 venv/
-
-# Outputs (generated results)
-Outputs/
