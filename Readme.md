@@ -1,132 +1,138 @@
 # pyTopRunDF
 
+A fast, two-dimensional runout simulation tool for debris flows to estimate potential inundation (deposition) areas on torrential fans.
+
 ## Background
-A two dimensional runout simulation tool for debris flows to predict inundation areas on torrential fans.
-Calculations are based on a semi-empirical runout prediction model for volcanic mudflows (lahars) as proposed by
-[Iverson et al. (1998).](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2)  
-They determined power-law relationships between the planimetric area of the deposits (B) and the deposit volume (V) by assuming geometric similarity: 
 
-$V=B\overline{h}$  
+pyTopRunDF implements a semi-empirical runout prediction approach originally proposed for volcanic mudflows (lahars) by
+[Iverson et al. (1998)](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2).
+They describe power-law relationships between the planimetric deposit area **B** and the deposit volume **V**, assuming geometric similarity:
 
-with $B$ the deposited area and $\overline{h}$ the average deposition height.  
+\[
+V = B \, \overline{h}
+\]
 
-Iverson et al. (1998) suggest geometric similarity between $B$ and $\overline{h}$ by assuming a constant ratio $\epsilon$ which yields to:  
+where **B** is the deposited area and \(\overline{h}\) is the mean deposition thickness.
+
+Geometric similarity between **B** and \(\overline{h}\) is expressed using a constant ratio \(\epsilon\), leading to:
 
 <div style="display: flex; justify-content: center;">
-    <img src="docs/geometric similarity.png" alt="alt text" width="300">
+  <img src="docs/geometric similarity.png" alt="Geometric similarity concept" width="300">
 </div>
 
-Thus the potential deposition area $B$ can be estimated based on the event volume $V$ and $k_B$, a coefficient which represents an average mobility of the mass
-movement containing some information on the flow properties during depositional phase.  
+The potential deposition area **B** can then be estimated from event volume **V** and a mobility coefficient \(k_B\),
+which captures average flow mobility during deposition:
 
-$B=k_BV^{2/3}$  
+\[
+B = k_B V^{2/3}
+\]
 
-### Range of mobility coefficients $k_B$ of alpine mass movements
+### Typical ranges of mobility coefficients \(k_B\) for alpine mass movements
 
-| Study                     | Process Type           | $k_B$ |
-|---------------------------|------------------------|-------|
-| [Crosta (2003)](https://doi.org/10.5194/nhess-3-407-2003)             | Granular debris flows | 6     |
-| [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                     | Granular debris flows (IT) | 18    |
-| [Griswold (2004)](https://doi.org/10.3133/sir20075276)           | Debris flows          | 19    |
-| [Berti (2007)](https://doi.org/10.1016/j.geomorph.2007.01.014)              | Debris flows          | 30    |
-|  [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                    | Debris flows (CH)         | 32    |
-|  [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                    | Debris flows  (AUT)        | 45    |
-| [Capra (2002)](https://doi.org/10.1016/S0377-0273(01)00252-9)              | Earth slides          | 51    |
-|  [Scheidl and Rickenmann (2010)]( https://doi.org/10.1002/esp.1897)                   | Debris floods (AUT)     | 57    |
-| [Waythomas (2000)](https://doi.org/10.1016/S0377-0273(00)00202-X)          | Volcanic earth flows  | 92    |
-| [Iverson et al. (1998).](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2)             | Lahars                | 200   |
-
+| Study | Process Type | \(k_B\) |
+|------|--------------|--------:|
+| [Crosta (2003)](https://doi.org/10.5194/nhess-3-407-2003) | Granular debris flows | 6 |
+| [Scheidl and Rickenmann (2010)](https://doi.org/10.1002/esp.1897) | Granular debris flows (IT) | 18 |
+| [Griswold (2004)](https://doi.org/10.3133/sir20075276) | Debris flows | 19 |
+| [Berti (2007)](https://doi.org/10.1016/j.geomorph.2007.01.014) | Debris flows | 30 |
+| [Scheidl and Rickenmann (2010)](https://doi.org/10.1002/esp.1897) | Debris flows (CH) | 32 |
+| [Scheidl and Rickenmann (2010)](https://doi.org/10.1002/esp.1897) | Debris flows (AUT) | 45 |
+| [Capra (2002)](https://doi.org/10.1016/S0377-0273(01)00252-9) | Earth slides | 51 |
+| [Scheidl and Rickenmann (2010)](https://doi.org/10.1002/esp.1897) | Debris floods (AUT) | 57 |
+| [Waythomas (2000)](https://doi.org/10.1016/S0377-0273(00)00202-X) | Volcanic earth flows | 92 |
+| [Iverson et al. (1998)](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2) | Lahars | 200 |
 
 ## Features
 
--   Model potential 2D debris-flow deposition (heights) based on a given event volume and one parameter ($k_B$).
--   Fast calculation.
--   Accounts for the fan topography.
--   Designed for preliminary hazard zoning.
+- **2D deposition modelling** (deposit height / thickness) from event volume \(V\) and mobility coefficient \(k_B\)
+- **Fast computation**
+- **Topography-aware** (fan surface influences deposition patterns)
+- Designed for **preliminary hazard zoning / screening**
 
-## Instructions
+## Documentation
 
--   See [instructions](docs/Instructions.md)
+- Detailed usage notes: see [`docs/Instructions.md`](docs/Instructions.md)
 
 ## Requirements
 
--   Python 3.8 or higher
--   pip (Python package manager)
+- **Python 3.8+** (tested successfully with **Python 3.11**)
+- `pip`
 
-## How to Run
+> Tip: If installation fails on older Python versions due to dependency constraints, use Python **3.11**.
 
-### Step 1: Clone the Repository
+## Installation
 
-First, clone this repository to your local machine:
+### 1) Clone the repository
 
-``` bash
-git clone <https://github.com/schidli/pyTopRunDF.git>
+Run: `git clone https://github.com/schidli/pyTopRunDF.git`  
+Then: `cd pyTopRunDF`
 
-cd pyTopRunDF
-```
+### 2) Create and activate a virtual environment
 
-### Step 2: Create a Virtual Environment
+**macOS / Linux**
 
-Create a virtual environment to isolate the dependencies:
+- Create: `python3 -m venv pytoprundf`
+- Activate: `source pytoprundf/bin/activate`
 
-``` bash
-python -m venv pytoprundf
-```
+**Windows (PowerShell)**
 
-Activate the virtual environment
+- Create: `python -m venv pytoprundf`
+- Activate: `.\pytoprundf\Scripts\Activate.ps1`
 
--   on Windows:
+### 3) Upgrade pip tooling (recommended)
 
-``` bash
-pytoprundf\Scripts\activate
-```
+Run: `python -m pip install --upgrade pip setuptools wheel`
 
--   on MacOS/Linux:
+### 4) Install dependencies
 
-``` bash
-source pytoprundf\Scripts\activate
-```
+Run: `pip install -r requirements.txt`
 
-### Step 3: Install Dependencies
+## Running the model
 
-Install the required Python packages using the requirements.txt file:
+### Batch run (multiple scenarios)
 
-``` bash
-pip install -r requirements.txt
-```
+Run: `python batch_selected_process.py`
 
-### Step 4: Run the Script
+## Inputs and outputs
 
-Run the main script:
+### Scenarios
 
-``` bash
-python batch_select_process.py
-```
+Each scenario folder contains:
 
-### Step 5: View the Results
+- `topofan.asc` — input DTM raster (ASCII grid)
+- `input.json` — scenario configuration / event parameters
 
-The script will generate output files (e.g., depo.asc) and display a plot of the result for each input scenario. Check the output directory for the generated files.
+### Outputs
 
-Project Structure:
+For each scenario, results are written to an output folder, for example:
 
-```         
-pyTopRunDF/
-├── batch_selected_process.py:      Start script.
-├── TopRunDF.py:                    Main script for the simulation.
-├── Scenarios/
-│   ├── Scenario_1/                 Input scenarios
-│   │   ├── topofan.asc:            Input digital terrain model (DTM) of scenario1.
-│   │   └── input.json:             Input data file of scenario1.
-│   ├── Scenario_2/
-│   │   ├── topofan.asc:            Input digital terrain model (DTM) of scenario2.
-│   │   └── input.json:             Input data file of scenario2.
-│   ├── Scenario.../
-├── Outputs/
-│   ├── Scenario_1/
-│   │   ├── depo.asc:               Output deposition raster of sceanrio1.
-│   │   └── <eventname>_deposition.png:  Resultplot of scenario1.
-│   ├── Scenario.../ 
-├── RandomSingleFlow.py:            External Python file for random walk logic.
-├── PlotResult.py:                  External Python file for plot logic.
-└── requirements.txt:               Python dependencies.
-```
+- `depo.asc` — output deposition raster (ASCII grid)
+- `<eventname>_deposition.png` — result plot
+
+## Project structure
+
+pyTopRunDF/  
+├── batch_selected_process.py        # Start script (batch runs)  
+├── TopRunDF.py                      # Main simulation logic  
+├── Scenarios/  
+│   ├── Scenario_1/  
+│   │   ├── topofan.asc              # Input DTM (ASCII grid)  
+│   │   └── input.json               # Scenario input parameters  
+│   ├── Scenario_2/  
+│   │   ├── topofan.asc  
+│   │   └── input.json  
+│   └── ...  
+├── Outputs/  
+│   ├── Scenario_1/  
+│   │   ├── depo.asc                 # Output deposition raster  
+│   │   └── <eventname>_deposition.png  
+│   └── ...  
+├── RandomSingleFlow.py              # Random walk logic  
+├── PlotResult.py                    # Plotting utilities  
+└── requirements.txt                 # Python dependencies  
+
+## Citation
+
+If you use pyTopRunDF in academic or technical work, please cite:
+
+- Iverson, R. M., Schilling, S. P., & Vallance, J. W. (1998). *Objective delineation of lahar-inundation hazard zones*. Geological Society of America Bulletin, 110(8), 972–984. https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2
