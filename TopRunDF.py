@@ -81,6 +81,8 @@ if __name__ == "__main__":
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
     fin = None
+    eventname = input_file.stem
+    output_raster_path = output_dir / "depo.asc"
 
     try:
         # Load input.json
@@ -207,7 +209,6 @@ if __name__ == "__main__":
         # Save the output raster
         out_meta = dataset.meta.copy()
         out_meta.update({"driver": "AAIGrid", "dtype": "float32"})
-        output_raster_path = output_dir / "depo.asc"
         with rasterio.open(output_raster_path, "w", **out_meta) as dest:
             dest.write(band4, 1)
         # Clean up the temporary file if preprocessing was done
@@ -223,8 +224,19 @@ if __name__ == "__main__":
         if fin is None:
             fin = "terminated"
         print("Simulation", fin)
-        # Create an instance of the HillshadePlotter class
-plotter = HillshadePlotter()
 
-# Generate the plot
-plotter.plot(output_raster_path, dem_file, eventname, output_dir)
+    if fin == "finished":
+        plotter = HillshadePlotter()
+        try:
+            plotter.plot(output_raster_path, dem_file, eventname, output_dir)
+            plotter.plot_interactive_3d(
+                output_raster_path, dem_file, eventname, output_dir
+            )
+            plotter.export_plotly_3d(
+                output_raster_path, dem_file, eventname, output_dir
+            )
+            plotter.export_pyvista_3d(
+                output_raster_path, dem_file, eventname, output_dir, show=False
+            )
+        except Exception as plot_error:
+            print(f"Error during plotting: {plot_error}")

@@ -1,1 +1,15 @@
 pytoprundf/
+# macOS
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+pytoprundf/
+.venv/
+venv/
+
+# Outputs (generated results)
+Outputs/

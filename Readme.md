@@ -8,9 +8,7 @@ pyTopRunDF implements a semi-empirical runout prediction approach originally pro
 [Iverson et al. (1998)](https://doi.org/10.1130/0016-7606(1998)110<0972:ODOLIH>2.3.CO;2).
 They describe power-law relationships between the planimetric deposit area **B** and the deposit volume **V**, assuming geometric similarity:
 
-\[
-V = B \, \overline{h}
-\]
+$V=B\overline{h}$  
 
 where **B** is the deposited area and \(\overline{h}\) is the mean deposition thickness.
 
@@ -23,9 +21,7 @@ Geometric similarity between **B** and \(\overline{h}\) is expressed using a con
 The potential deposition area **B** can then be estimated from event volume **V** and a mobility coefficient \(k_B\),
 which captures average flow mobility during deposition:
 
-\[
-B = k_B V^{2/3}
-\]
+$B=k_BV^{2/3}$ 
 
 ### Typical ranges of mobility coefficients \(k_B\) for alpine mass movements
 
@@ -111,25 +107,27 @@ For each scenario, results are written to an output folder, for example:
 
 ## Project structure
 
-pyTopRunDF/  
-├── batch_selected_process.py        # Start script (batch runs)  
-├── TopRunDF.py                      # Main simulation logic  
-├── Scenarios/  
-│   ├── Scenario_1/  
-│   │   ├── topofan.asc              # Input DTM (ASCII grid)  
-│   │   └── input.json               # Scenario input parameters  
-│   ├── Scenario_2/  
-│   │   ├── topofan.asc  
-│   │   └── input.json  
-│   └── ...  
-├── Outputs/  
-│   ├── Scenario_1/  
-│   │   ├── depo.asc                 # Output deposition raster  
-│   │   └── <eventname>_deposition.png  
-│   └── ...  
-├── RandomSingleFlow.py              # Random walk logic  
-├── PlotResult.py                    # Plotting utilities  
-└── requirements.txt                 # Python dependencies  
+```         
+pyTopRunDF/
+├── batch_selected_process.py:      Start script.
+├── TopRunDF.py:                    Main script for the simulation.
+├── Scenarios/
+│   ├── Scenario_1/                 Input scenarios
+│   │   ├── topofan.asc:            Input digital terrain model (DTM) of scenario1.
+│   │   └── input.json:             Input data file of scenario1.
+│   ├── Scenario_2/
+│   │   ├── topofan.asc:            Input digital terrain model (DTM) of scenario2.
+│   │   └── input.json:             Input data file of scenario2.
+│   ├── Scenario.../
+├── Outputs/
+│   ├── Scenario_1/
+│   │   ├── depo.asc:               Output deposition raster of sceanrio1.
+│   │   └── <eventname>_deposition.png:  Resultplot of scenario1.
+│   ├── Scenario.../ 
+├── RandomSingleFlow.py:            External Python file for random walk logic.
+├── PlotResult.py:                  External Python file for plot logic.
+└── requirements.txt:               Python dependencies.
+``` 
 
 ## Citation
 
